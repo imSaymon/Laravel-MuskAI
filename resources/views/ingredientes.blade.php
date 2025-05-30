@@ -11,21 +11,28 @@
 
 <body>
     <header>
-        <h1> MuskAI 🤖 </h1>
+        <h1> Gerador De Receitas 🤖 </h1>
+        <nav>
+            <a href="/">Voltar</a>
+        </nav>
     </header>
 
-    <main>
+    <main id="ingredientes">
         <h2> Gerador De Receitas </h2>
         <p> Econtre Receitas Deliciosas em seus Ingredientes da Geladeira - Inteligência Artificial Transformando suas
-            Comidas em Obra de Arte</p>
+            Comidas em Obra de Arte! </p>
         <article>
-            <label>Ingredientes</label>
-            <form action="{{ route('ingredientesAcao') }}" method="POST">
+            <label> Ingredientes </label>
+            <form method="POST" action="{{ route('ingredientesAcao') }}">
                 @csrf
-                <input type="text" name="ingredientes">
-                <input type="submit" value="Senta o dedo nessa coisa">
+                <input type="text" name="ingredientes" value="{{ $ingredientes ?? '' }}">
+                <input type="submit" value="Bora Cozinhar!">
             </form>
         </article>
+
+        @if(!empty($receita))
+            {!! preg_replace("/\r\n|\n/", '<br>', $receita) !!}
+        @endif
     </main>
 
     <footer>
@@ -33,5 +40,4 @@
     </footer>
 
 </body>
-
 </html>

@@ -10,7 +10,12 @@ class HomeController extends Controller
 {
     public function index(Request $r): View
     {
-        return view('welcome');
+        return view('home');
+    }
+
+    public function ingredientes(Request $r): View
+    {
+        return view('ingredientes');
     }
 
     public function ingredientesAcao(Request $r): View
@@ -25,19 +30,18 @@ class HomeController extends Controller
         $response = $client->post('completions', [
             'json' => [
                 "model" => "gpt-4o-mini",
-                "prompt" => 'Por favor, Gere uma receita incrivel com os seguintes ingredientes: ' . $r->ingredientes,
+                "prompt" => 'Gere uma receita incrivel SOMENTE com os seguintes ingredientes:' . $r->ingredientes . ' e não inclua ingredientes extras! Se não conseguir gerar a receita mande a pessoa ir ao mercado.',
                 "temperature" => 0.5,
                 "max_tokens" => 500
             ]
         ]);
         if ($response->getStatusCode() == 200) {
             $data = json_decode($response->getBody(), true);
-            $viewData['Receita'] = $data['choices'][0]['text'];
-            return view('welcome', $viewData);
+            $viewData['receita'] = $data['choices'][0]['text'];
+            $viewData['ingredientes'] = $r->ingredientes;
+            return view('ingredientes', $viewData);
         } else {
-            return view('welcome', [
-                'error' => 'Erro ao obter a receita. Por favor, tente novamente.'
-            ]);
+            ['error' => 'Erro ao obter a receita. Por favor, tente novamente.'];
         }
     }
 }

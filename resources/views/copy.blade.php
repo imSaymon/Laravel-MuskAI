@@ -51,6 +51,7 @@
                     <input type="submit" value="Bora!">
                 </p>
                 @if(!empty($copyGerada))
+                    <img src="{{ $image }}" alt=""> <br>
                     {!! preg_replace("/\r\n|\n/", '<br>', $copyGerada) !!}
                 @endif
             </form>

@@ -1,0 +1,8 @@
+article>form {
+    display: flex;
+    gap: 20px;
+}
+
+article>form>input[type="text"] {
+    flex: 1;
+}
